@@ -1,5 +1,6 @@
 import re
 import time
+import datetime
 import concurrent.futures
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -159,7 +160,8 @@ def create_playlist_from_list():
     if playlist_entries:
         print(f"\nWriting {len(playlist_entries)} channels to {PLAYLIST_FILENAME}...")
         playlist_entries.sort()
-        final_content = ["#EXTM3U"] + playlist_entries
+        updated_at = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+        final_content = [f'#EXTM3U x-tvg-url="" url-tvg=""', f'# Last Updated: {updated_at}'] + playlist_entries
         with open(PLAYLIST_FILENAME, "w") as f:
             f.write("\n".join(final_content))
         print("Playlist creation complete!")
